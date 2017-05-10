@@ -14,7 +14,7 @@
   <!--  **************Swarm Navigation  ***************  -->
   <group ns="uav0">
     <param name="tf_prefix" value="uav0" />
-    <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/>
+    <include file="$(find turtlebot_navigation)/launch/includes/swarm_move_base.launch.xml"/>
       <arg name="robot_name" value="uav0" />
     
     <node pkg="action_softbus" type="action_softbus_node" name="action_softbus_node0" output="screen">

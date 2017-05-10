@@ -57,7 +57,7 @@ namespace action_softbus {
       ros::NodeHandle nh;
       if(!ros::param::get("~run_dwa", runDWA_))
       {
-          ROS_INFO("could not get run_dwa param.");
+          //ROS_INFO("not set run_dwa param.");
           runDWA_ = false;
       }
 

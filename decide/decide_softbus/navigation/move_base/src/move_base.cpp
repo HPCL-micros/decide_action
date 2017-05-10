@@ -50,7 +50,7 @@ namespace move_base {
     as_(NULL),
     planner_costmap_ros_(NULL), controller_costmap_ros_(NULL),
     bgp_loader_("nav_core", "nav_core::BaseGlobalPlanner"),
-    blp_loader_("nav_core", "nav_core::BaseLocalPlanner"), 
+    //blp_loader_("nav_core", "nav_core::BaseLocalPlanner"), 
     recovery_loader_("nav_core", "nav_core::RecoveryBehavior"),
     planner_plan_(NULL), latest_plan_(NULL), controller_plan_(NULL),
     runPlanner_(false), planSuccess_(false), setup_(false), p_freq_change_(false), c_freq_change_(false), new_global_plan_(false){
@@ -63,9 +63,10 @@ namespace move_base {
     recovery_trigger_ = PLANNING_R;
 
     //get some parameters that will be global to the move base node
-    std::string global_planner, local_planner;
+    std::string global_planner;
+    //std::string local_planner;
     private_nh.param("base_global_planner", global_planner, std::string("navfn/NavfnROS"));
-    private_nh.param("base_local_planner", local_planner, std::string("base_local_planner/TrajectoryPlannerROS"));
+    //private_nh.param("base_local_planner", local_planner, std::string("base_local_planner/TrajectoryPlannerROS"));
     private_nh.param("global_costmap/robot_base_frame", robot_base_frame_, std::string("base_link"));
     private_nh.param("global_costmap/global_frame", global_frame_, std::string("/map"));
     private_nh.param("planner_frequency", planner_frequency_, 0.0);
@@ -144,14 +145,14 @@ namespace move_base {
     controller_costmap_ros_->pause();
 
     //create a local planner
-    try {
+    /*try {
       tc_ = blp_loader_.createInstance(local_planner);
       ROS_INFO("Created local_planner %s", local_planner.c_str());
       tc_->initialize(blp_loader_.getName(local_planner), &tf_, controller_costmap_ros_);
     } catch (const pluginlib::PluginlibException& ex) {
       ROS_FATAL("Failed to create the %s planner, are you sure it is properly registered and that the containing library is built? Exception: %s", local_planner.c_str(), ex.what());
       exit(1);
-    }
+    }*/
 
     // Start actively updating costmaps based on sensor data
     planner_costmap_ros_->start();
@@ -269,7 +270,7 @@ namespace move_base {
       ROS_INFO("reconfigure global planner successfully!!!");
     }
 
-    if(config.base_local_planner != last_config_.base_local_planner){
+    /*if(config.base_local_planner != last_config_.base_local_planner){
       boost::shared_ptr<nav_core::BaseLocalPlanner> old_planner = tc_;
       //create a local planner
       try {
@@ -286,7 +287,7 @@ namespace move_base {
         tc_ = old_planner;
         config.base_local_planner = last_config_.base_local_planner;
       }
-    }
+    }*/
 
     last_config_ = config;
   }
@@ -536,7 +537,7 @@ namespace move_base {
     delete controller_plan_;
 
     planner_.reset();
-    tc_.reset();
+    //tc_.reset();
   }
 
   //bool MoveBase::makePlan(const geometry_msgs::PoseStamped& goal, std::vector<geometry_msgs::PoseStamped>& plan){

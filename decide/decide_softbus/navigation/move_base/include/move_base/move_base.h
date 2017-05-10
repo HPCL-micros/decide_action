@@ -195,7 +195,7 @@ namespace move_base {
 
       MoveBaseActionServer* as_;
 
-      boost::shared_ptr<nav_core::BaseLocalPlanner> tc_;
+      //boost::shared_ptr<nav_core::BaseLocalPlanner> tc_;
       costmap_2d::Costmap2DROS* planner_costmap_ros_, *controller_costmap_ros_;
 
       boost::shared_ptr<nav_core::BaseGlobalPlanner> planner_;
@@ -226,7 +226,7 @@ namespace move_base {
       //geometry_msgs::PoseStamped oscillation_pose_;
       decide_softbus_msgs::NavigationPoint oscillation_pose_;
       pluginlib::ClassLoader<nav_core::BaseGlobalPlanner> bgp_loader_;
-      pluginlib::ClassLoader<nav_core::BaseLocalPlanner> blp_loader_;
+      //pluginlib::ClassLoader<nav_core::BaseLocalPlanner> blp_loader_;
       pluginlib::ClassLoader<nav_core::RecoveryBehavior> recovery_loader_;
 
       //set up plan triple buffer
