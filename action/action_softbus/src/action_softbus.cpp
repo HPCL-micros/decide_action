@@ -94,8 +94,10 @@ namespace action_softbus {
       controller_costmap_ros_->start();
       //initialize the action plugin
       try {
-          action_plugin_ = ac_loader_.createInstance("action_softbus/DemoAction");
-          action_plugin_->initialize("DemoAction", &tf_, controller_costmap_ros_);
+          //action_plugin_ = ac_loader_.createInstance("action_softbus/DemoAction");
+          //action_plugin_->initialize("DemoAction", &tf_, controller_costmap_ros_);
+          action_plugin_ = ac_loader_.createInstance("action_softbus/BebopAction");
+          action_plugin_->initialize("BebopAction", &tf_, controller_costmap_ros_);
           ROS_INFO("action plugin is loaded successfully!\n");
       } catch (const pluginlib::PluginlibException& ex) {
           ROS_FATAL("Exception: %s", ex.what());

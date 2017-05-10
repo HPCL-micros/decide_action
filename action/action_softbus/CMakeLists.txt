@@ -56,6 +56,14 @@ target_link_libraries(action_softbus_node action_softbus)
 add_library(demo_action
     src/demo_action.cpp
 )
+add_dependencies(demo_action action_softbus_gencfg)
+add_dependencies(demo_action ${decide_softbus_msgs_EXPORTED_TARGETS})
+
+add_library(bebop_action
+    src/bebop_action.cpp
+)
+add_dependencies(bebop_action action_softbus_gencfg)
+add_dependencies(bebop_action ${decide_softbus_msgs_EXPORTED_TARGETS})
 
 install(
     TARGETS

@@ -1,5 +1,5 @@
 1. roslaunch turtlebot_stage turtlebot_in_stage.launch
-2. rostopic pub /robot_0/move_base_simple/goal decide_softbus_msgs/NavigationPoint "
+2. rostopic pub /uav0/move_base_simple/goal decide_softbus_msgs/NavigationPoint "
    header:
    seq: 0
    stamp: {secs: 0, nsecs: 0}
@@ -10,4 +10,4 @@
    arrival_time: {secs: 0, nsecs: 0}
    formation: 1
    parameters: [0]"
-3. rosservice call /robot_0/move_base/set_controlling "CONTROLLING: 1"
+3. rosservice call /uav0/move_base/set_controlling "CONTROLLING: 1"
