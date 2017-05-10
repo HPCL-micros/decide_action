@@ -1,0 +1,172 @@
+<launch>
+  <node name="hector_manager" pkg="micros_flocking" type="hector_manager" output="screen">
+  <param name='robotnum' value='50'/>
+  </node>
+  <group ns='uav0'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+
+  <group ns='uav1'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" output="screen" />
+  </group>
+  <group ns='uav2'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+ 
+  <group ns='uav3'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav4'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav5'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  
+  <group ns='uav6'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav7'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav8'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav9'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  
+  <group ns='uav10'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav11'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav12'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav13'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav14'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav15'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  
+  <group ns='uav16'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav17'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav18'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav19'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+
+  <group ns='uav20'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+
+  <group ns='uav21'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" output="screen" />
+  </group>
+  <group ns='uav22'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+ 
+  <group ns='uav23'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav24'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav25'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  
+  <group ns='uav26'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav27'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav28'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav29'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  
+  <group ns='uav30'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+
+  <group ns='uav31'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" output="screen" />
+  </group>
+  <group ns='uav32'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+ 
+  <group ns='uav33'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav34'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav35'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  
+  <group ns='uav36'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav37'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav38'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav39'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  
+  <group ns='uav40'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+
+  <group ns='uav41'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" output="screen" />
+  </group>
+  <group ns='uav42'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+ 
+  <group ns='uav43'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav44'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav45'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  
+  <group ns='uav46'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav47'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav48'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+  <group ns='uav49'>
+  <node name="ms" pkg="micros_flocking" type="hector_alpha" />
+  </group>
+</launch>

@@ -463,11 +463,12 @@ namespace micros_flock{
             p_r.second = vlvy + basespeed * sin(base_angle);
             time_count=0;
             diff_thread_ok = false;
+            /*
             while(my_position.first == 0)
             {
                 ros::spinOnce();
                 loop_rate.sleep();
-            }
+            }*/
             my_vpoint_position.first = my_position.first+keepdistance;
             my_vpoint_position.second = my_position.second+keepdistance;
             my_vpoint_velocity.first = my_velocity.first;

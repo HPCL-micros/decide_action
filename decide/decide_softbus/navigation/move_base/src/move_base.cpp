@@ -113,6 +113,8 @@ namespace move_base {
     // swarm plan publisher for visualization purpose
     //swarm_plan_pub_ = private_nh.advertise<decide_softbus_msgs::Path>("swarm_plan", 1);
     swarm_plan_pub_ = nh.advertise<decide_softbus_msgs::Path>("/swarm_plan", 1);
+    
+    rviz_plan_pub_ = nh.advertise<geometry_msgs::PoseArray>("/rviz_plan", 1);
 
     //we'll assume the radius of the robot to be consistent with what's specified for the costmaps
     private_nh.param("local_costmap/inscribed_radius", inscribed_radius_, 0.325);
@@ -672,6 +674,33 @@ namespace move_base {
       bool gotPlan = n.ok() && makePlan(temp_goal, *planner_plan_);
 
       if(gotPlan){
+      
+        //std::vector<geometry_msgs::PoseStamped> rviz_plan;
+        geometry_msgs::PoseArray rviz_plan;
+        rviz_plan.header.seq=(*planner_plan_)[0].header.seq;
+        rviz_plan.header.stamp=(*planner_plan_)[0].header.stamp;
+        rviz_plan.header.frame_id=(*planner_plan_)[0].header.frame_id;
+        for(int i=0; i<planner_plan_->size(); i++)
+        {
+            geometry_msgs::Pose tmp_pose;
+            //tmp_pose.header.seq=(*planner_plan_)[i].header.seq;
+            //tmp_pose.header.stamp=(*planner_plan_)[i].header.stamp;
+            //tmp_pose.header.frame_id=(*planner_plan_)[i].header.frame_id;
+            
+            tmp_pose.position.x=(*planner_plan_)[i].pose.position.x;
+            tmp_pose.position.y=(*planner_plan_)[i].pose.position.y;
+            tmp_pose.position.z=(*planner_plan_)[i].pose.position.z;
+            
+            tmp_pose.orientation.x=(*planner_plan_)[i].pose.orientation.x;
+            tmp_pose.orientation.y=(*planner_plan_)[i].pose.orientation.y;
+            tmp_pose.orientation.z=(*planner_plan_)[i].pose.orientation.z;
+            tmp_pose.orientation.w=(*planner_plan_)[i].pose.orientation.w;
+            
+            rviz_plan.poses.push_back(tmp_pose);
+        }
+        
+        rviz_plan_pub_.publish(rviz_plan);
+      
         //set swarm configs in the planner_plan_
         for(int i=0; i<planner_plan_->size(); i++)
         {

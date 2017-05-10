@@ -52,6 +52,7 @@
 #include <nav_core/base_global_planner.h>
 #include <nav_core/recovery_behavior.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/PoseArray.h>
 #include <std_msgs/Int32.h>
 #include <costmap_2d/costmap_2d_ros.h>
 #include <costmap_2d/costmap_2d.h>
@@ -215,6 +216,7 @@ namespace move_base {
       ros::ServiceServer set_simple_swarm_config_srv_;
       ros::ServiceServer set_controlling_srv_;
       ros::Publisher swarm_plan_pub_;
+      ros::Publisher rviz_plan_pub_;
       bool shutdown_costmaps_, clearing_rotation_allowed_, recovery_behavior_enabled_;
       double oscillation_timeout_, oscillation_distance_;
 

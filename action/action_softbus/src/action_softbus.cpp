@@ -74,7 +74,7 @@ namespace action_softbus {
       //create the ros wrapper for the controller's costmap... and initializer a pointer we'll use with the underlying map
       controller_costmap_ros_ = new costmap_2d::Costmap2DROS("local_costmap", tf_);
       controller_costmap_ros_->pause();
-
+      
       if(runDWA_) {
           //create the dwa local planner
           try {
@@ -92,16 +92,15 @@ namespace action_softbus {
       }
 
       controller_costmap_ros_->start();
-
       //initialize the action plugin
       try {
           action_plugin_ = ac_loader_.createInstance("action_softbus/DemoAction");
           action_plugin_->initialize("DemoAction", &tf_, controller_costmap_ros_);
+          ROS_INFO("action plugin is loaded successfully!\n");
       } catch (const pluginlib::PluginlibException& ex) {
           ROS_FATAL("Exception: %s", ex.what());
           exit(1);
       }
-
       dsrv_ = new dynamic_reconfigure::Server<action_softbus::ActionSoftbusConfig>(ros::NodeHandle("~"));
       dynamic_reconfigure::Server<action_softbus::ActionSoftbusConfig>::CallbackType cb = boost::bind(&ActionSoftbus::reconfigureCB, this, _1, _2);
       dsrv_->setCallback(cb);

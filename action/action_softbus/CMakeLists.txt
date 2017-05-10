@@ -50,7 +50,6 @@ add_executable(action_softbus_node
   src/action_softbus_node.cpp
 )
 target_link_libraries(action_softbus_node action_softbus)
-add_dependencies(action_softbus_node ${decide_softbus_msgs_EXPORTED_TARGETS})
 #set_target_properties(action_softbus_node PROPERTIES OUTPUT_NAME action_softbus_node)
 
 ## Declare a C++ library
