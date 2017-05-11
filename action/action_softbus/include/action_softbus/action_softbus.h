@@ -151,6 +151,9 @@ namespace action_softbus {
 
       //dwa flag
       bool runDWA_;
+      
+      //action plugin name
+      std::string action_plugin_name_;
   };
 };
 #endif

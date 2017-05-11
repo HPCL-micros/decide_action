@@ -55,11 +55,14 @@ namespace action_softbus {
       action_softbus_state_(FREE),action_start_(false), action_frequency_(20),new_pre_plan_(false),setup_(false), controller_patience_(5.0)
   {
       ros::NodeHandle nh;
-      if(!ros::param::get("~run_dwa", runDWA_))
-      {
+      ros::NodeHandle priv_node("~");
+      //if(!ros::param::get("~run_dwa", runDWA_))
+      //{
           //ROS_INFO("not set run_dwa param.");
-          runDWA_ = false;
-      }
+      //    runDWA_ = false;
+      //}
+      priv_node.param<bool>("run_dwa", runDWA_, false);
+      priv_node.param<std::string>("action_plugin_name", action_plugin_name_, "action_softbus/DemoAction");
 
       swarm_pre_plan_ = new std::vector<decide_softbus_msgs::NavigationPoint>();
       controller_plan_ = new std::vector<decide_softbus_msgs::NavigationPoint>();
@@ -96,9 +99,9 @@ namespace action_softbus {
       try {
           //action_plugin_ = ac_loader_.createInstance("action_softbus/DemoAction");
           //action_plugin_->initialize("DemoAction", &tf_, controller_costmap_ros_);
-          action_plugin_ = ac_loader_.createInstance("action_softbus/BebopAction");
-          action_plugin_->initialize("BebopAction", &tf_, controller_costmap_ros_);
-          ROS_INFO("action plugin is loaded successfully!\n");
+          action_plugin_ = ac_loader_.createInstance(action_plugin_name_);
+          action_plugin_->initialize(action_plugin_name_, &tf_, controller_costmap_ros_);
+          ROS_INFO("action plugin %s is loaded successfully", action_plugin_name_.c_str());
       } catch (const pluginlib::PluginlibException& ex) {
           ROS_FATAL("Exception: %s", ex.what());
           exit(1);

@@ -21,7 +21,7 @@
 using namespace std;
 namespace bebop_flock{
 
-bool simulation = true;
+bool simulation = false;
 double PI=acos(-1);
 #define EPSILON 0.1
 #define A 5
@@ -538,8 +538,8 @@ public:
       base_angle += baseomega /hz;
       p_r.first = vlvx + basespeed * cos(base_angle);
       p_r.second = vlvy + basespeed * sin(base_angle);
-       q_r.first += p_r.first * interval;
-       q_r.second += p_r.second * interval;
+       //q_r.first += p_r.first * interval;
+       //q_r.second += p_r.second * interval;
 //       cout<<q_r.first<<' '<<q_r.second<<endl;
       sendmsg.linear.x = basespeed * cos(base_angle);
       sendmsg.linear.y = basespeed * sin(base_angle);

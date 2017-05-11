@@ -79,8 +79,8 @@ namespace action_softbus{
             vvx = path_[index+1].pose.position.x-path_[index].pose.position.x;
             vvy = path_[index+1].pose.position.y-path_[index].pose.position.y;
             double scale = sqrt(vvx*vvx+vvy*vvy)+0.0001;
-            vvx=vvx/scale*10;
-            vvy=vvy/scale*10;
+            vvx=vvx/scale*0.5;
+            vvy=vvy/scale*0.5;
             cout<<scale<<endl;
         }
         vpx = path_[index].pose.position.x;
