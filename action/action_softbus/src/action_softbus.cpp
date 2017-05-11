@@ -117,6 +117,9 @@ namespace action_softbus {
       actioner_thread_->join();
       delete actioner_thread_;
 
+      if(controller_costmap_ros_ != NULL)
+          delete controller_costmap_ros_;
+
       delete swarm_pre_plan_;
       delete controller_plan_;
 
@@ -228,6 +231,7 @@ namespace action_softbus {
       else
       {
           ROS_INFO("Successed to pass swarm pre plan to the controller.");
+          resetState();
           action_softbus_state_ = WAITING;
       }
   }
@@ -253,6 +257,7 @@ namespace action_softbus {
       else
       {
           ROS_INFO("Successed to pass swarm pre plan to the controller.");
+          resetState();
           action_softbus_state_ = WAITING;
       }
   }
@@ -286,7 +291,7 @@ namespace action_softbus {
                   if(new_pre_plan_){
                       boost::unique_lock<boost::mutex> lock(swarm_pre_plan_mutex_);
                       new_pre_plan_ = false;
-                      std::vector<decide_softbus_msgs::NavigationPoint>* temp_plan = swarm_pre_plan_;
+                      std::vector<decide_softbus_msgs::NavigationPoint>* temp_plan = controller_plan_;
                       controller_plan_ = swarm_pre_plan_;
                       lock.unlock();
 
@@ -310,7 +315,7 @@ namespace action_softbus {
                   if(new_pre_plan_){
                       boost::unique_lock<boost::mutex> lock(swarm_pre_plan_mutex_);
                       new_pre_plan_ = false;
-                      std::vector<decide_softbus_msgs::NavigationPoint>* temp_plan = swarm_pre_plan_;
+                      std::vector<decide_softbus_msgs::NavigationPoint>* temp_plan = controller_plan_;
                       controller_plan_ = swarm_pre_plan_;
                       lock.unlock();
 
@@ -321,7 +326,6 @@ namespace action_softbus {
                   }
 
                   bool done = false;
-                  last_valid_control_ = ros::Time::now();
                   if(!runDWA_)
                       done = executeCycle();
                   else
@@ -374,6 +378,15 @@ namespace action_softbus {
                   publishZeroVelocity();
                   action_softbus_state_ = RECOVERYING;
               }
+              else
+              {
+                  //ROS_INFO("recovery successfully.");
+                  //publishZeroVelocity();
+                  //setActionPath();
+                  //action_softbus_state_ = CONTROLLING;
+                  publishZeroVelocity();
+                  ROS_INFO("waiting for valid cmd_vel...");
+              }
           }
       }
 
@@ -409,6 +422,13 @@ namespace action_softbus {
                     ROS_INFO("could not get cmd_vel.");
                     publishZeroVelocity();
                     action_softbus_state_ = RECOVERYING;
+                }
+                else
+                {
+                    ROS_INFO("recovery successfully.");
+                    publishZeroVelocity();
+                    setDWAActionPath();
+                    action_softbus_state_ = CONTROLLING;
                 }
             }
         }
