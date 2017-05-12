@@ -70,6 +70,7 @@ namespace move_base {
     private_nh.param("global_costmap/robot_base_frame", robot_base_frame_, std::string("base_link"));
     private_nh.param("global_costmap/global_frame", global_frame_, std::string("/map"));
     private_nh.param("planner_frequency", planner_frequency_, 0.0);
+    private_nh.param("planner_rate", planner_rate_, 20.0);
     private_nh.param("controller_frequency", controller_frequency_, 20.0);
     private_nh.param("planner_patience", planner_patience_, 5.0);
     private_nh.param("controller_patience", controller_patience_, 15.0);
@@ -818,7 +819,6 @@ namespace move_base {
     //std::vector<geometry_msgs::PoseStamped> global_plan;
     std::vector<decide_softbus_msgs::NavigationPoint> global_plan;
 
-    ros::Rate r(controller_frequency_);
     if(shutdown_costmaps_){
       ROS_DEBUG_NAMED("move_base","Starting up costmaps that were shut down previously");
       planner_costmap_ros_->start();
@@ -832,7 +832,8 @@ namespace move_base {
 
     ros::NodeHandle n;
     int loop_count=0;
-    while(n.ok()&&loop_count<50)
+    ros::Rate r(planner_rate_);
+    while(n.ok()&&loop_count<(planner_patience_*planner_rate_))
     {
       //if(c_freq_change_)
       //{
@@ -954,7 +955,9 @@ namespace move_base {
 
     //if the node is killed then we'll abort and return
     //as_->setAborted(move_base_msgs::MoveBaseResult(), "Aborting on the goal because the node has been killed");
-    as_->setAborted(decide_softbus_msgs::MoveBaseResult(), "Aborting on the goal because the node has been killed");
+    //as_->setAborted(decide_softbus_msgs::MoveBaseResult(), "Aborting on the goal because the node has been killed");
+    //ROS_INFO("Aborting on the goal because the plan thread could not get a valid swarm pre plan");
+    as_->setAborted(decide_softbus_msgs::MoveBaseResult(), "Aborting on the goal");
     ROS_INFO("Aborting on the goal because the plan thread could not get a valid swarm pre plan");
     return;
   }
