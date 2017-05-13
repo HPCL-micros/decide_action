@@ -224,6 +224,8 @@ namespace move_base {
       RecoveryTrigger recovery_trigger_;
 
       ros::Time last_valid_plan_, last_valid_control_, last_oscillation_reset_;
+      double failed_plan_count_;
+      double planner_try_times_;
       //geometry_msgs::PoseStamped oscillation_pose_;
       decide_softbus_msgs::NavigationPoint oscillation_pose_;
       pluginlib::ClassLoader<nav_core::BaseGlobalPlanner> bgp_loader_;

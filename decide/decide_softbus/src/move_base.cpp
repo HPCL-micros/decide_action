@@ -71,6 +71,7 @@ namespace move_base {
     private_nh.param("global_costmap/global_frame", global_frame_, std::string("/map"));
     private_nh.param("planner_frequency", planner_frequency_, 0.0);
     private_nh.param("planner_rate", planner_rate_, 20.0);
+    private_nh.param("planner_try_times", planner_try_times_, 100.0);
     private_nh.param("controller_frequency", controller_frequency_, 20.0);
     private_nh.param("planner_patience", planner_patience_, 5.0);
     private_nh.param("controller_patience", controller_patience_, 15.0);
@@ -649,6 +650,7 @@ namespace move_base {
 
   void MoveBase::planThread(){
     ROS_DEBUG_NAMED("move_base_plan_thread","Starting planner thread...");
+    failed_plan_count_=0;
     ros::NodeHandle n;
     ros::Timer timer;
     bool wait_for_wake = false;
@@ -676,6 +678,8 @@ namespace move_base {
       bool gotPlan = n.ok() && makePlan(temp_goal, *planner_plan_);
 
       if(gotPlan){
+
+        failed_plan_count_=0;
       
         //std::vector<geometry_msgs::PoseStamped> rviz_plan;
         geometry_msgs::PoseArray rviz_plan;
@@ -760,19 +764,22 @@ namespace move_base {
       //if we didn't get a plan and we are in the planning state (the robot isn't moving)
       //else if(state_==PLANNING){  //TODO, need new recovery behavior
       else{
-        ROS_DEBUG_NAMED("move_base_plan_thread","No Plan...");
-        ros::Time attempt_end = last_valid_plan_ + ros::Duration(planner_patience_);
+        //ROS_DEBUG_NAMED("move_base_plan_thread","No Plan...");
+        //ros::Time attempt_end = last_valid_plan_ + ros::Duration(planner_patience_);
 
         //check if we've tried to make a plan for over our time limit
         lock.lock();
-        if(ros::Time::now() > attempt_end && runPlanner_){
+        //if(ros::Time::now() > attempt_end && runPlanner_){
+        //try max times to get a path in the planner thread
+        failed_plan_count_++;
+        if(failed_plan_count_>=planner_try_times_){
           //we'll move into our obstacle clearing mode
           //state_ = CLEARING;
           publishZeroVelocity();
           //recovery_trigger_ = PLANNING_R;
           runPlanner_ = false;
           planSuccess_ = false;
-          ROS_INFO("plan failed! could not get a valid swarm pre plan. plan thread sleep.");
+          ROS_INFO("plan failed even though do the best-effort! could not get a valid swarm pre plan. plan thread sleep.");
 
           //publish the controlling msg to the action softbus, stop controlling.
           std_msgs::Int32 a_st;
