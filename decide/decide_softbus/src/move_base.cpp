@@ -969,7 +969,7 @@ namespace move_base {
     //as_->setAborted(decide_softbus_msgs::MoveBaseResult(), "Aborting on the goal because the node has been killed");
     //ROS_INFO("Aborting on the goal because the plan thread could not get a valid swarm pre plan");
     as_->setAborted(decide_softbus_msgs::MoveBaseResult(), "Aborting on the goal");
-    ROS_INFO("Aborting on the goal because the plan thread could not get a valid swarm pre plan");
+    ROS_INFO("Aborting on the goal because the plan thread could not get a valid swarm pre plan.");
     planner_try_best_mutex_.lock();
     planner_try_best_=false;
     planner_try_best_mutex_.unlock();
