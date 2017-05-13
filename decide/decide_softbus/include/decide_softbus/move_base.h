@@ -249,9 +249,10 @@ namespace move_base {
       decide_softbus_msgs::NavigationPoint planner_goal_;
       boost::thread* planner_thread_;
 
+      bool planner_try_best_;
       boost::mutex swarm_config_mutex_;
       boost::mutex controlling_mutex_;
-
+      boost::mutex planner_try_best_mutex_;
 
       boost::recursive_mutex configuration_mutex_;
       dynamic_reconfigure::Server<move_base::MoveBaseConfig> *dsrv_;

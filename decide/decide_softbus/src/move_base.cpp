@@ -52,7 +52,7 @@ namespace move_base {
     bgp_loader_("nav_core", "nav_core::BaseGlobalPlanner"),
     //blp_loader_("nav_core", "nav_core::BaseLocalPlanner"), 
     recovery_loader_("nav_core", "nav_core::RecoveryBehavior"),
-    planner_plan_(NULL), latest_plan_(NULL), controller_plan_(NULL),
+    planner_plan_(NULL), latest_plan_(NULL), controller_plan_(NULL), planner_try_best_(false),
     runPlanner_(false), planSuccess_(false), setup_(false), p_freq_change_(false), c_freq_change_(false), new_global_plan_(false){
 
     as_ = new MoveBaseActionServer(ros::NodeHandle(), "move_base", boost::bind(&MoveBase::executeCb, this, _1), false);
@@ -678,7 +678,7 @@ namespace move_base {
       bool gotPlan = n.ok() && makePlan(temp_goal, *planner_plan_);
 
       if(gotPlan){
-
+        //reset failed_plan_count
         failed_plan_count_=0;
       
         //std::vector<geometry_msgs::PoseStamped> rviz_plan;
@@ -780,6 +780,9 @@ namespace move_base {
           runPlanner_ = false;
           planSuccess_ = false;
           ROS_INFO("plan failed even though do the best-effort! could not get a valid swarm pre plan. plan thread sleep.");
+          planner_try_best_mutex_.lock();
+          planner_try_best_=true;
+          planner_try_best_mutex_.unlock();
 
           //publish the controlling msg to the action softbus, stop controlling.
           std_msgs::Int32 a_st;
@@ -840,7 +843,8 @@ namespace move_base {
     ros::NodeHandle n;
     int loop_count=0;
     ros::Rate r(planner_rate_);
-    while(n.ok()&&loop_count<(planner_patience_*planner_rate_))
+    //while(n.ok()&&loop_count<(planner_patience_*planner_rate_))
+    while(n.ok()&&(!planner_try_best_))
     {
       //if(c_freq_change_)
       //{
@@ -966,6 +970,9 @@ namespace move_base {
     //ROS_INFO("Aborting on the goal because the plan thread could not get a valid swarm pre plan");
     as_->setAborted(decide_softbus_msgs::MoveBaseResult(), "Aborting on the goal");
     ROS_INFO("Aborting on the goal because the plan thread could not get a valid swarm pre plan");
+    planner_try_best_mutex_.lock();
+    planner_try_best_=false;
+    planner_try_best_mutex_.unlock();
     return;
   }
 
@@ -1102,6 +1109,10 @@ namespace move_base {
     runPlanner_ = false;
     planSuccess_ = false;
     lock.unlock();
+
+    planner_try_best_mutex_.lock();
+    planner_try_best_=false;
+    planner_try_best_mutex_.unlock();
 
     // Reset statemachine
     recovery_index_ = 0;
