@@ -71,9 +71,9 @@ namespace move_base {
     private_nh.param("global_costmap/global_frame", global_frame_, std::string("/map"));
     private_nh.param("planner_frequency", planner_frequency_, 0.0);
     private_nh.param("planner_rate", planner_rate_, 20.0);
-    private_nh.param("planner_try_times", planner_try_times_, 100.0);
+    private_nh.param("planner_try_times", planner_try_times_, 10.0);
     private_nh.param("controller_frequency", controller_frequency_, 20.0);
-    private_nh.param("planner_patience", planner_patience_, 5.0);
+    private_nh.param("planner_patience", planner_patience_, 10.0);
     private_nh.param("controller_patience", controller_patience_, 15.0);
 
     private_nh.param("oscillation_timeout", oscillation_timeout_, 0.0);
@@ -671,7 +671,7 @@ namespace move_base {
       //geometry_msgs::PoseStamped temp_goal = planner_goal_;
       decide_softbus_msgs::NavigationPoint temp_goal = planner_goal_;
       lock.unlock();
-      ROS_DEBUG_NAMED("move_base_plan_thread","Planning...");
+      ROS_INFO("move_base_plan_thread, planning...");
 
       //run planner
       planner_plan_->clear();
