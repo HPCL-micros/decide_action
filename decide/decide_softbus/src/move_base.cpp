@@ -760,6 +760,10 @@ namespace move_base {
         runPlanner_ = false;
         planSuccess_ = true;
         lock.unlock();
+
+        planner_try_best_mutex_.lock();
+        planner_try_best_=false;
+        planner_try_best_mutex_.unlock();
       }
       //if we didn't get a plan and we are in the planning state (the robot isn't moving)
       //else if(state_==PLANNING){  //TODO, need new recovery behavior
@@ -909,6 +913,10 @@ namespace move_base {
 
         //we want to go back to the planning state for the next execution cycle
         recovery_index_ = 0;
+
+        planner_try_best_mutex_.lock();
+        planner_try_best_=false;
+        planner_try_best_mutex_.unlock();
 
         //we have a new goal so make sure the planner is awake
         lock.lock();
