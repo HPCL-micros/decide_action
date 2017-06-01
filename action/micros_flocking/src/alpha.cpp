@@ -21,9 +21,9 @@ double PI=acos(-1);
 #define B 5
 const double C = abs(A-B) / sqrt(4*A*B);
 #define H 0.2
-#define D 20
-#define R 25
-#define C1 0.05
+#define D 10
+#define R 12
+#define C1 0.3
 #define C2 0.3
 #define rspeedlimit 2.0
 double basespeed = 3;

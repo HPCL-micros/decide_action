@@ -13,7 +13,7 @@
 #include <cmath>
 #include <ctime>
 using namespace std;
-#define R 8
+#define R 12
 #define sendT 1
 #define perror 0  //value
 #define verror 0 //rate
